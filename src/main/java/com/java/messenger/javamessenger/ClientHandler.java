@@ -1,4 +1,4 @@
-package com.mycompany.java.messenger;
+package com.java.messenger.javamessenger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

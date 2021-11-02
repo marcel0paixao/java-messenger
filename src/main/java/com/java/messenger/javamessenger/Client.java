@@ -1,4 +1,4 @@
-package com.mycompany.java.messenger;
+package com.java.messenger.javamessenger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -86,7 +86,7 @@ public class Client {
         System.out.println("Username to enter de group chat: ");
         String username = scanner.nextLine();
         System.out.println("------------------------------");
-        Socket socket = new Socket("localhost", 1234);
+        Socket socket = new Socket("26.13.121.9", 1234);
         Client client = new Client(socket, username);
 
         client.listenForMessage();

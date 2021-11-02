@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.java.messenger;
+package com.java.messenger.javamessenger;
 
 import java.net.ServerSocket;
 import java.net.Socket;
