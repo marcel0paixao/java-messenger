@@ -1,4 +1,11 @@
-package com.java.messenger.javamessenger;
+package com.marcel0paixao.java.messenger.Server;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.util.Scanner;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,22 +16,22 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class ClientHandler implements Runnable{
+public class KeepConnection implements Runnable{
 
-    public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
+    public static ArrayList<KeepConnection> keepConnection = new ArrayList<>();
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
 
-    public ClientHandler(Socket socket){
+    public KeepConnection(Socket socket){
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername = bufferedReader.readLine();
 
-            clientHandlers.add(this);
+            keepConnection.add(this);
             broadcastMessage("SERVER: "+ clientUsername + " has connected!");
         } catch (Exception e) {
             //TODO: handle exception
@@ -50,12 +57,12 @@ public class ClientHandler implements Runnable{
         }
     }
     public void broadcastMessage(String messageToSend) {
-        for (ClientHandler clientHandler : clientHandlers) {
+        for (KeepConnection keepConnection : keepConnection) {
             try {
-                if (!clientHandler.clientUsername.equals(clientUsername)) {
-                    clientHandler.bufferedWriter.write(messageToSend);
-                    clientHandler.bufferedWriter.newLine();
-                    clientHandler.bufferedWriter.flush();
+                if (!keepConnection.clientUsername.equals(clientUsername)) {
+                    keepConnection.bufferedWriter.write(messageToSend);
+                    keepConnection.bufferedWriter.newLine();
+                    keepConnection.bufferedWriter.flush();
                 }
                 else{
                     SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
@@ -63,13 +70,12 @@ public class ClientHandler implements Runnable{
                     System.out.println(messageToSend + " | " + formatter.format(date));
                 }
             } catch (Exception e) {
-                //TODO: handle exception
                 closeEverything(socket, bufferedReader, bufferedWriter);
             }
         }
     }
     public void removeClientHandler() {
-        clientHandlers.remove(this);
+        keepConnection.remove(this);
         broadcastMessage("SERVER: " + clientUsername + " has desconnected!");
     }
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
@@ -85,7 +91,6 @@ public class ClientHandler implements Runnable{
                 socket.close();
             }
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
     }

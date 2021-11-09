@@ -1,26 +1,30 @@
-package com.java.messenger.javamessenger;
+package com.marcel0paixao.java.messenger.Controllers;
 
+import com.marcel0paixao.java.messenger.Controllers.ClientController;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.util.Scanner;
 
-public class Client {
+public class ChatController {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String username;
+    private String email;
+    private String pass;
+    private int user_id;
 
-    public Client(Socket socket, String username){
+    public ChatController(Socket socket, String username, int user_id){
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.username = username;
         } catch (Exception e) {
-            //TODO: handle exception
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
@@ -40,7 +44,6 @@ public class Client {
                 bufferedWriter.flush();
             }
         } catch (Exception e) {
-            //TODO: handle exception
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
@@ -49,14 +52,12 @@ public class Client {
 
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 String groupChatMessage;
                 while (socket.isConnected()) {
                     try {
                         groupChatMessage = bufferedReader.readLine();
                         System.out.println(groupChatMessage);
                     } catch (Exception e) {
-                        //TODO: handle exception
                         closeEverything(socket, bufferedReader, bufferedWriter);
                     }
                 }
@@ -80,16 +81,32 @@ public class Client {
             e.printStackTrace();
         }
     }
+    
+    public ResultSet auth(ChatController chtController) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Username to enter de group chat: ");
-        String username = scanner.nextLine();
-        System.out.println("------------------------------");
-        Socket socket = new Socket("26.13.121.9", 1234);
-        Client client = new Client(socket, username);
+    public String getEmail() {
+        return email;
+    }
 
-        client.listenForMessage();
-        client.sendMessage();
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

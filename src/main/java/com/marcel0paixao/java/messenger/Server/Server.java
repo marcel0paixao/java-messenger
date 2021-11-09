@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.java.messenger.javamessenger;
+package com.marcel0paixao.java.messenger.Server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
-/**
- *
- * @author marcel0paixao
- */
 public class Server {
     private ServerSocket serverSocket;
 
@@ -25,13 +15,12 @@ public class Server {
             while(!serverSocket.isClosed()){
                 Socket socket = serverSocket.accept();
                 System.out.println("client has connected");
-                ClientHandler clientHandler = new ClientHandler(socket);
+                KeepConnection keepConnection = new KeepConnection(socket);
 
-                Thread thread = new Thread(clientHandler);
+                Thread thread = new Thread(keepConnection);
                 thread.start();
             }
         } catch (Exception e) {
-            //TODO: handle exception
             closeServerSocket();
         }
     }
@@ -41,7 +30,6 @@ public class Server {
                 serverSocket.close();
             }
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
     }

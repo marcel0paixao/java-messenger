@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>messenger</name>
+	<name>java-messenger</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1635841193574</id>
+			<id>1635841061597</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
