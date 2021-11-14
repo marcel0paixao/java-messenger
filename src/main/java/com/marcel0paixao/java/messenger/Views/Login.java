@@ -151,7 +151,6 @@ public class Login extends javax.swing.JFrame {
                 chatWindow.setUser_id(userExists.getInt("id"));
                 chatWindow.setIp(this.getIp());
                 chatWindow.setPort(this.getPort());
-                chatWindow.startChat();
                 chatWindow.setVisible(true);
                 this.setVisible(false);
             } else{
@@ -159,9 +158,6 @@ public class Login extends javax.swing.JFrame {
             }
         } catch (SQLException error){
             JOptionPane.showMessageDialog(null, "LOGIN: " + error);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "IOException: " + ex);
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }

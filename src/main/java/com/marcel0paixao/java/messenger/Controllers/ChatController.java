@@ -1,6 +1,5 @@
 package com.marcel0paixao.java.messenger.Controllers;
 
-import com.marcel0paixao.java.messenger.Controllers.ClientController;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -8,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.util.Scanner;
+import com.marcel0paixao.java.messenger.Views.Chat;
+import java.io.IOException;
 
 public class ChatController {
     private Socket socket;
@@ -17,19 +18,21 @@ public class ChatController {
     private String email;
     private String pass;
     private int user_id;
+    private Chat chat;
 
-    public ChatController(Socket socket, String username, int user_id){
+    public ChatController(Socket socket, String username, int user_id, Chat chat){
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.username = username;
+            this.chat = chat;
         } catch (Exception e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
 
-    public void sendMessage() {
+    public void sendMessage(String message, ChatController chatC) {
         try {
             bufferedWriter.write(username);
             bufferedWriter.newLine();
@@ -56,8 +59,8 @@ public class ChatController {
                 while (socket.isConnected()) {
                     try {
                         groupChatMessage = bufferedReader.readLine();
-                        System.out.println(groupChatMessage);
-                    } catch (Exception e) {
+                        chat.appendTextArea(groupChatMessage);
+                    } catch (IOException e) {
                         closeEverything(socket, bufferedReader, bufferedWriter);
                     }
                 }
