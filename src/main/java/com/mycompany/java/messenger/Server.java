@@ -24,14 +24,13 @@ public class Server {
         try {
             while(!serverSocket.isClosed()){
                 Socket socket = serverSocket.accept();
-                System.out.println("client has connected");
                 ClientHandler clientHandler = new ClientHandler(socket);
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
+                System.out.println("Client '" + clientHandler.getClientEmail() + "' has connected");
             }
         } catch (Exception e) {
-            //TODO: handle exception
             closeServerSocket();
         }
     }
@@ -41,7 +40,6 @@ public class Server {
                 serverSocket.close();
             }
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
     }
