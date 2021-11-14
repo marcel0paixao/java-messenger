@@ -2,13 +2,9 @@ package com.mycompany.java.messenger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
@@ -17,7 +13,6 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private String email;
     private String pass;
-    private final Integer maxConnAttempts = 5;
 
     public Client(Socket socket, String email, String pass){
         try {
